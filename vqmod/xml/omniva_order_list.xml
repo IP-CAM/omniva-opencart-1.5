@@ -1,0 +1,28 @@
+<modification>
+	<id><![CDATA[VQMOD CORE FOR OPENCART - DO NOT REMOVE]]></id>
+	<version><![CDATA[1.4.x and 1.5.x]]></version>
+	<vqmver><![CDATA[2.4.0]]></vqmver>
+    <author><![CDATA[mijora]]></author>
+  <file name="admin/view/template/sale/order_list.tpl">
+        <operation>
+            <search position="ibefore" error="log"><![CDATA[<a onclick="$('#form').attr('action', '<?php echo $invoice; ?>');]]></search>
+            <add><![CDATA[
+                        <a onclick="$('#form').attr('action', '<?php echo $omnivalt_label; ?>'); $('#form').attr('target', '_blank'); $('#form').submit();" class="button"><?php echo $omnivalt_labels; ?></a>
+                        <!--<a onclick="$('#form').attr('action', '<?php echo $omnivalt_manifest; ?>'); $('#form').attr('target', '_blank'); $('#form').submit();" class="button"><?php echo $omnivalt_manifests; ?></a>-->
+                         ]]></add>
+        </operation>
+        <operation>
+            <search position="iafter" error="log" index="1"><![CDATA[</script>]]></search>
+            <add><![CDATA[<script>
+                    function validate_chkbox(form){
+                        var searchIDs = $(".content input:checkbox:checked").map(function(){
+                          return $(this).val();
+                        }).get();
+                        if($.isEmptyObject(searchIDs)) {
+                            alert("<?php echo $this->language->get('text_select_error'); ?>");
+                        }
+                    }
+                </script>]]></add>
+        </operation>
+    </file>
+</modification>

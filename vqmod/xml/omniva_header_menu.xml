@@ -1,0 +1,36 @@
+<modification>
+	<id><![CDATA[VQMOD CORE FOR OPENCART - DO NOT REMOVE]]></id>
+	<version><![CDATA[1.4.x and 1.5.x]]></version>
+	<vqmver><![CDATA[2.4.0]]></vqmver>
+    <author><![CDATA[mijora]]></author>
+	<file name="admin/view/template/common/header.tpl">
+		<operation error="skip">
+			<search position="before"><![CDATA[
+				<li id="system"><a class="top"><?php echo $text_system; ?></a>
+			]]></search>
+			<add><![CDATA[
+				<li id="omnivalt"><a href="<?=$omnivaManifestUrl;?>" class="top"><?=$omnivalt;?></a>
+		        <ul>
+		          <li><a href="<?=$omnivaManifestUrl;?>"><?=$omnivaManifest;?></a></li>
+		          <li><a href="<?=$omnivaSettingsUrl;?>"><?=$omniva_settings;?></a></li>
+				</ul>
+				</li>
+			]]></add>
+		</operation>
+	</file>
+		<file name="admin/controller/common/header.php">
+		<operation error="skip">
+			<search position="before"><![CDATA[
+				$this->data['home'] = $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL');
+			]]></search>
+			<add><![CDATA[
+			    $this->load->language('shipping/omnivalt');
+				$this->data['omnivalt'] = $this->language->get('menu_head');
+				$this->data['omnivaManifest'] = $this->language->get('menu_manifest');
+				$this->data['omniva_settings'] = $this->language->get('menu_settings');
+				$this->data['omnivaManifestUrl'] = $this->url->link('omnivalt/omnivalt', 'token=' . $this->session->data['token'], 'SSL');
+				$this->data['omnivaSettingsUrl'] = $this->url->link('shipping/omnivalt', 'token=' . $this->session->data['token'], 'SSL');
+				]]></add>
+			</operation>
+		</file>
+</modification>
