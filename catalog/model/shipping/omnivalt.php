@@ -18,7 +18,6 @@ class ModelShippingOmnivalt extends Model {
         $cabine_select = '';
         $first = '';
         $cost = $this->config->get('omnivalt_'.$service.'_price');
-        //Adition for Latvia pricing
         if($address['iso_code_2'] == 'LV' && $service == "parcel_terminal")
             $cost = $this->config->get('omnivalt_parcel_terminal_pricelv'); 
         if($address['iso_code_2'] == 'LV' && $service == "courier")
@@ -53,23 +52,11 @@ class ModelShippingOmnivalt extends Model {
 <select name="omnivalt_parcel_terminal" id="omnivalt_parcel_terminal" class="form-control form-inline input-sm" style="width: 40%; display: inline;"
 onchange="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'td input\').val($(this).val()); $(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'td input\').prop(\'checked\',true);" 
 onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd input\').prop(\'checked\',true);">';
-//print'<pre>';var_dump($cabins);print'</pre>';
             usort($cabins,function($a,$b){ if ($a[1] ==  $b[1]) return ($a[0] < $b[0]) ? -1 : 1; return ($a[1] < $b[1]) ? -1 : 1; });
             $cabine_select .= $this->groupTerminals($cabins, $address['iso_code_2']);
 
             foreach ($cabins as $cabin) {   
                     if (!$first) $first = $cabin[3];
-                    //$cabine_select .= '<option value="omnivalt.parcel_terminal_'.$cabin[3].'">'.$cabin[0].' '.$cabin[2].'</option>'."\n";
-                          
-                          
-                   /* $sub_quote['parcel_terminal_' .$cabin[3]] = array( 
-                        'code'         => 'omnivalt.parcel_terminal_' . $cabin[3],
-                        'title'        => '<b id="parcel_terminal' . $cabin[3].'"><script>$(\'#parcel_terminal'.$cabin[3].'\').parent().parent().parent("tr").hide();</script>'.$title.' '.$cabin[0].' '.$cabin[2].'</b>',
-                        'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
-                        'tax_class_id' => 0,
-                        'text'         => ' '.$this->currency->format($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->session->data['currency'])
-                    );
-                    */
 
                     $sub_quote['parcel_terminal_' .$cabin[3]] = array(
                         'code'         => 'omnivalt.parcel_terminal_' . $cabin[3],
@@ -91,13 +78,9 @@ onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd 
             $cabine_select .= '</select>';
         }
         $code = "omnivalt";
-        if ($service == "parcel_terminal")$code = 'fake';
-       /* if (floatval($cost) <=30) {
-          $sum = $this->currency->convert($cost, $currency, $this->config->get('config_currency'));   
-        } else {
-          $sum = $this->currency->convert(0, $currency, $this->config->get('config_currency'));
-          $cost = 0;
-        }*/
+        if ($service == "parcel_terminal")
+          $code = 'fake';
+
         $quote_data[$service] = array(
           'code'         => $code.'.'.$service ,
           'title'        => $title.$cabine_select,

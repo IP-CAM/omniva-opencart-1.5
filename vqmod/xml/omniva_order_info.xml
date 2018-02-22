@@ -1,131 +1,89 @@
 <modification>
-	<id><![CDATA[VQMOD CORE FOR OPENCART - DO NOT REMOVE]]></id>
-	<version><![CDATA[1.4.x and 1.5.x]]></version>
-	<vqmver><![CDATA[2.4.0]]></vqmver>
+	  <id><![CDATA[VQMOD CORE FOR OPENCART - DO NOT REMOVE]]></id>
+	  <version><![CDATA[1.4.x and 1.5.x]]></version>
+	  <vqmver><![CDATA[2.4.0]]></vqmver>
     <author><![CDATA[mijora]]></author>
     <file name="admin/view/template/sale/order_info.tpl">
-        <!--<operation>
-            <search position="ibefore"><![CDATA[$('select[name="order_status_id"]').change(function(){orderStatusChange();});]]></search>
-            <add><![CDATA[
-                $(document).delegate('#button-labelsCount-add', 'click', function(e) {
-                e.preventDefault();
-                var order_id = <?php echo $order_id; ?>;
-                    $.ajax({
-                        url: 'index.php?route=shipping/omnivalt/labelsCount&token=<?php echo $token; ?>',
-                        type: 'post',
-                        
-                    data:  {'labelsCount': $('select[name=\'labelsCount\']').val(), 
-                            'order_id': order_id},
-                        beforeSend: function() {
-                            $('#button-labelsCount-add').button('loading');
-                        },
-                        complete: function() {
-                            setTimeout(function(){$('#button-labelsCount-add').button('reset');}, 1500);
-                        },
-                    });
-                });
-            ]]></add>
-        </operation>-->
         <operation>
-            <search position="iafter"><![CDATA[<div class="buttons">]]></search>
+            <search position="iafter" error="log"><![CDATA[<div class="buttons">]]></search>
             <add><![CDATA[
             <a href="<?php echo $omnivalt_label; ?>" target="_blank" class="button"><?php echo $omnivalt_labels; ?></a>
             ]]></add>
         </operation>
-        <!--<operation>
-            <search position="ibefore"><![CDATA[<td><?php echo $text_invoice_no; ?></td>]]></search>
-            <add><![CDATA[
-                <td>Select Labels count:</td>
-                <td><form>
-                  <select name="labelsCount" id="labelsCount" class="form-control input-sm" >
-                  <option value="1" selected>Select labels count</option>
-                  <?php for ($i=2; $i<20; $i++) {?>
-                  <option value="<?=$i?>"><?=$i?></option>
-                  <?php }?>
-                  </select>
-                  <button id="button-labelsCount-add" title="Save count" class="btn btn-success btn-xs">Save</button>
-                  </form>
-                </td>
-              </tr><tr>                          
-            ]]></add>
-        </operation>-->
-                     <operation>
-            <search position="iafter"><![CDATA[<div class="vtabs">]]></search>
+        <operation>
+            <search position="iafter" error="log"><![CDATA[<div class="vtabs">]]></search>
             <add><![CDATA[
                      <?php if (substr($shipping_code, 0, 8) == 'omnivalt') { ?>
-        <a href="#tab-omniva">Omniva lipdukai</a>
-        <?php } ?>
+                     <a href="#tab-omniva">Omniva lipdukai</a>
+                     <?php } ?>
             ]]></add>
         </operation>
         <operation>
-            <search position="before"><![CDATA[div id="tab-order" class="vtabs-content">]]></search>
+            <search position="before" error="log"><![CDATA[div id="tab-order" class="vtabs-content">]]></search>
               <add><![CDATA[
-     <?php if (substr($shipping_code, 0, 8) == 'omnivalt') { ?>
-      <div id="tab-omniva" class="vtabs-content">
-<form method="POST" action="<?php print $editOmniva;?>">
-<input type="hidden" name="order_id" value="<?= $order_id;?>">
-        <table class="form">
-          <tr>
-            <td><?=$labels_count;?></td>
-            <td>
-                  <select name="labelsCount"  >
-
-                  <?php for ($i=1; $i<10; $i++) {?>
-                  <option value="<?=$i?>" <?php if($i == $labelsCount) print 'selected';?> ><?=$i?></option>
-                  <?php }?>
-                  </select>
-</td>
-          </tr>
-          <tr>
-            <td><?=$weight;?></td>
-            <td><input type="number" step="0.0001" name="omnivaWeight" value="<?= $omnivaWeight; ?>"></td>
-          </tr>		
-     <tr>
-            <td>C.O.D</td>
-            <td>
-              <select name="cod_available">
-              <option value="0"><?=$text_no;?></option>
-                <option value="1" <?php if(($payment_code == 'cod' || $cod_amount) && $cod_amount != 888888) { ?> selected="" <?php } ?>><?=$text_yes;?></option>
-              </select>
-            </td>
-          </tr>	
-     <tr>
-            <td><?=$cod_amountL;?></td>
-            <td><input type="number" name="cod_value" value="<? if($cod_amount !=888888)print $cod_amount;?>" step="0.0001"></td>
-          </tr>	
-     <tr>
-            <td><?=$delivery_method;?></td>
-            <td>
-            <select name="delivery_method" class="form-control input-sm">
-               <option disabled>Select labels count</option>
-               <option value="omnivalt.courier|OmnivaLt kurjeris">Omnivalt Courier</option>
-                            <?php $parcel_terminals = '';
-                            $grouped_options = array();
-          foreach ($omniva_terminals as $terminal){
-            if (!isset($grouped_options[$terminal[1]]))
-              $grouped_options[(string)$terminal[1]] = array();
-              $grouped_options[(string)$terminal[1]][(string)$terminal[3]] = $terminal[0].', '.$terminal[2];  
-            }
-          foreach ($grouped_options as $city=>$locs){
-          $parcel_terminals .= '<optgroup label = "'.$city.'">';
-            foreach ($locs as $key=>$loc){
-              $parcel_terminals .= '<option value = "omnivalt.parcel_terminal_'.$key.'|'.$loc.'" '.('omnivalt.parcel_terminal_'.$key == $shipping_code ?'selected':'').'>'.$loc.'</option>';
-            }
-            $parcel_terminals .= '</optgroup>';
-          }
-        print $parcel_terminals;
-                            ?>
-                            </select>
-
-            </td>
-          </tr>	
-	</table>
-<input type="submit" name="updateOmniva" value="<?=$renew;?>">
-<input type="submit" name="generateLabel" value="<?=$generate_labels;?>">
-</form>
-	</div>
-<?php } ?>
-            ]]></add>
-        </operation>
+                <?php if (substr($shipping_code, 0, 8) == 'omnivalt') { ?>
+                  <div id="tab-omniva" class="vtabs-content">
+                    <form method="POST" action="<?php print $editOmniva;?>">
+                      <input type="hidden" name="order_id" value="<?= $order_id;?>">
+                      <table class="form">
+                        <tr>
+                          <td><?=$labels_count;?></td>
+                          <td>
+                              <select name="labelsCount"  >
+                                <?php for ($i=1; $i<10; $i++) {?>
+                                <option value="<?=$i?>" <?php if($i == $labelsCount) print 'selected';?> ><?=$i?></option>
+                                <?php }?>
+                              </select>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td><?=$weight;?></td>
+                          <td><input type="number" step="0.0001" name="omnivaWeight" value="<?= $omnivaWeight; ?>"></td>
+                        </tr>		
+                        <tr>
+                            <td>C.O.D</td>
+                            <td>
+                              <select name="cod_available">
+                                <option value="0"><?=$text_no;?></option>
+                                  <option value="1" <?php if(($payment_code == 'cod' || $cod_amount) && $cod_amount != 888888) { ?> selected="" <?php } ?>><?=$text_yes;?></option>
+                              </select>
+                            </td>
+                        </tr>	
+                        <tr>
+                            <td><?=$cod_amountL;?></td>
+                            <td><input type="number" name="cod_value" value="<? if($cod_amount !=888888)print $cod_amount;?>" step="0.0001"></td>
+                        </tr>	
+                        <tr>
+                          <td><?=$delivery_method;?></td>
+                          <td>
+                          <select name="delivery_method" class="form-control input-sm">
+                            <option disabled>Select labels count</option>
+                            <option value="omnivalt.courier|OmnivaLt kurjeris">Omnivalt Courier</option>
+                                <?php $parcel_terminals = '';
+                                $grouped_options = array();
+                                foreach ($omniva_terminals as $terminal){
+                                  if (!isset($grouped_options[$terminal[1]]))
+                                    $grouped_options[(string)$terminal[1]] = array();
+                                    $grouped_options[(string)$terminal[1]][(string)$terminal[3]] = $terminal[0].', '.$terminal[2];  
+                                  }
+                                foreach ($grouped_options as $city=>$locs){
+                                $parcel_terminals .= '<optgroup label = "'.$city.'">';
+                                  foreach ($locs as $key=>$loc){
+                                    $parcel_terminals .= '<option value = "omnivalt.parcel_terminal_'.$key.'|'.$loc.'" '.('omnivalt.parcel_terminal_'.$key == $shipping_code ?'selected':'').'>'.$loc.'</option>';
+                                  }
+                                $parcel_terminals .= '</optgroup>';
+                                }
+                            print $parcel_terminals;?>
+                          </select>
+                          </td>
+                        </tr>	
+                  </table>
+                <input type="submit" name="updateOmniva" value="<?=$renew;?>">
+                <input type="submit" name="generateLabel" value="<?=$generate_labels;?>">
+              </form>
+            </div>
+          <?php } ?>
+        ]]></add>
+      </operation>
      </file>
      </modification>

@@ -54,7 +54,7 @@ $_['menu_head']              = 'Omnivalt';
 $_['menu_manifest']          = 'Manifestas';
 $_['menu_settings']          = 'Nustatymai';
 // orders
-$_['generate_labels']               = 'Generatuoti Omnivalt lipdukus';
+$_['generate_labels']               = 'Generuoti Omnivalt lipdukus';
 $_['print_manifest']                = 'Spausdinti Omnivalt manifestą';
 $_['labels_count']                  = 'Lipdukų skaičius';
 $_['weight']                        = 'Svoris';

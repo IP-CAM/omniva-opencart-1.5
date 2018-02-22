@@ -3,7 +3,7 @@
 	<version><![CDATA[1.4.x and 1.5.x]]></version>
 	<vqmver><![CDATA[2.4.0]]></vqmver>
     <author><![CDATA[mijora]]></author>
-           <file name="admin/model/sale/order.php">
+    <file name="admin/model/sale/order.php">
         <operation>
             <search position="iafter"><![CDATA['order_id'                => $order_query->row['order_id'],]]></search>
             <add><![CDATA[
@@ -13,5 +13,4 @@
                 ]]></add>
         </operation>
     </file>
-
 </modification>
