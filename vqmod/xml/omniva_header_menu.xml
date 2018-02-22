@@ -5,9 +5,7 @@
     <author><![CDATA[mijora]]></author>
 	<file name="admin/view/template/common/header.tpl">
 		<operation error="log">
-			<search position="before"><![CDATA[
-				<li id="system"><a class="top"><?php echo $text_system; ?></a>
-			]]></search>
+			<search position="before"><![CDATA[<li id="system"><a class="top"><?php echo $text_system; ?></a>]]></search>
 			<add><![CDATA[
 				<li id="omnivalt"><a href="<?=$omnivaManifestUrl;?>" class="top"><?=$omnivalt;?></a>
 		        <ul>
