@@ -274,6 +274,27 @@
                     
 	        </td>
 	  </tr>
+      <!-- Field for email templates -->
+            <tr>
+              <td>
+                    Email templates<br />
+                    Enabled/Disabled 
+                    <input 
+                    <?php if($omnivalt_enable_templates == 'on') print 'checked'; ?>
+                    type="checkbox"
+                    name="omnivalt_enable_templates">
+                    <br />(Email will be sent then first label is generated.)
+                </td>
+                <td>
+                      <textarea 
+                        class="form-control" rows="5" 
+                        name="omnivalt_email_template"
+                        placeholder="Text to send then parcel is sent.">
+                        <?php echo $omnivalt_email_template;?>
+                      </textarea>
+                </td>
+            </tr>
+    <!--/ Field for email templates -->
         </form>
 
 </div>

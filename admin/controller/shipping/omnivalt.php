@@ -243,6 +243,17 @@ class ControllerShippingOmnivalt extends Controller
         }
         $this->data['omnivalt_terminals'] = $this->model_setting_setting->getSetting('omnivalt_terminals');
 
+        if (isset($this->request->post['omnivalt_email_template'])) {
+            $this->data['omnivalt_email_template'] = $this->request->post['omnivalt_email_template'];
+        } else {
+              $this->data['omnivalt_email_template'] = $this->config->get('omnivalt_email_template');
+        }
+          if (isset($this->request->post['omnivalt_enable_templates'])) {
+              $this->data['omnivalt_enable_templates'] = $this->request->post['omnivalt_enable_templates'];
+        } else {
+              $this->data['omnivalt_enable_templates'] = $this->config->get('omnivalt_enable_templates');
+        }
+
         $this->template = 'shipping/omnivalt.tpl';
 
         $this->children = array(
@@ -801,11 +812,11 @@ class ControllerShippingOmnivalt extends Controller
         $setting_cod = $this->config->get('omnivalt_cod');
         if ($cod) {
             return '<monetary_values>
-        <cod_receiver>' . $company . '</cod_receiver>
-        <values code="item_value" amount="' . $amount . '"/>
-      </monetary_values>
-      <account>' . $bank_account . '</account>
-      <reference_number>' . self::getReferenceNumber($order['order_id']) . '</reference_number>';
+                    <cod_receiver>' . $company . '</cod_receiver>
+                    <values code="item_value" amount="' . $amount . '"/>
+                    </monetary_values>
+                    <account>' . $bank_account . '</account>
+                    <reference_number>' . self::getReferenceNumber($order['order_id']) . '</reference_number>';
         } else {
             return '';
         }
@@ -1042,9 +1053,36 @@ class ControllerShippingOmnivalt extends Controller
             $tracking = json_encode($tracking);
             $this->db->query("INSERT INTO " . DB_PREFIX . "order_omniva (tracking, manifest, labels, id_order)
       VALUES ('$tracking','$manifest','$label','$id_order')");
+            if ($this->config->get('omnivalt_enable_templates') == 'on') {
+                $this->sendNotification($id_order, $tracking);
+            }
         };
     }
-
+    private function sendNotification($id_order = '', $tracking = '154233775CE')
+    {
+        return; //Uncomment to enable mail motification
+      try{
+        $order = $this->model_sale_order->getOrder($id_order);
+        $mail = new Mail();	
+        $mail->protocol = $this->config->get('config_mail_protocol');
+        $mail->parameter = $this->config->get('config_mail_parameter');
+        $mail->hostname = $this->config->get('config_smtp_host');
+        $mail->username = $this->config->get('config_smtp_username');
+        $mail->password = $this->config->get('config_smtp_password');
+        $mail->port = $this->config->get('config_smtp_port');
+        $mail->timeout = $this->config->get('config_smtp_timeout');				
+        $subject = $this->config->get('config_name') . ' siuntinio pasikeitimai ';
+        $message = $this->config->get('omnivalt_email_template');
+        $mail->setTo($order['email']);
+        $mail->setFrom($this->config->get('config_email'));
+        $mail->setSender(html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8'));
+        $mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+        $mail->setHtml(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+        $mail->send();
+      } catch(Exception $e) {
+        $this->log->write('Mail wasn\'t to this .nr. order'. $e);
+      }
+    }
     private function readyStatus()
     {
         $this->load->model('setting/setting');
