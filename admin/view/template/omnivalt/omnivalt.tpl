@@ -332,6 +332,18 @@ $(document).ready(function() {
 	});
  });
 });
+
+url = location.href;
+sent = url.slice(-6, -2);
+urlGot = new URL(url);
+var page = urlGot.searchParams.get("page");
+//console.log(page);
+if (sent != 'undefined' || page != undefined) { 
+   if (sent == 'page' || page != undefined) { // sent is equal to yes
+ 
+     $('[href="#tab-history"]').trigger('click');
+   }
+}
 </script>
 <?php
 echo $footer;
