@@ -18,6 +18,7 @@ class ModelShippingOmnivalt extends Model {
         $cabine_select = '';
         $first = '';
         $cost = $this->config->get('omnivalt_'.$service.'_price');
+        //Adition for Latvia pricing
         if($address['iso_code_2'] == 'LV' && $service == "parcel_terminal")
             $cost = $this->config->get('omnivalt_parcel_terminal_pricelv'); 
         if($address['iso_code_2'] == 'LV' && $service == "courier")
@@ -26,6 +27,7 @@ class ModelShippingOmnivalt extends Model {
             $cost = $this->config->get('omnivalt_parcel_terminal_priceee');  
         if($address['iso_code_2'] == 'EE' && $service == "courier")
             $cost = $this->config->get('omnivalt_courier_priceee');
+    
         if (stripos($cost,':') !== false){
           $prices = explode(',',$cost);
           if (!is_array($prices)){
@@ -48,7 +50,9 @@ class ModelShippingOmnivalt extends Model {
         $title = $this->language->get('text_'.$service);
         if ($service == "parcel_terminal" && $cabins = $this->config->get('omnivalt_terminals_LT')){
           $cabine_select ='';
-          $cabine_select .= '<script>$( "input[name=shipping_method]" ).focus(function() { $( this ).blur(); });</script>
+          $cabine_select .= '<script>$( "input[name=shipping_method]" ).focus(function() { $( this ).blur(); });
+          $(".omniva_terminal_opt").parent().parent().hide();
+          </script>
 <select name="omnivalt_parcel_terminal" id="omnivalt_parcel_terminal" class="form-control form-inline input-sm" style="width: 40%; display: inline;"
 onchange="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'td input\').val($(this).val()); $(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'td input\').prop(\'checked\',true);" 
 onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd input\').prop(\'checked\',true);">';
@@ -60,7 +64,7 @@ onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd 
 
                     $sub_quote['parcel_terminal_' .$cabin[3]] = array(
                         'code'         => 'omnivalt.parcel_terminal_' . $cabin[3],
-                        'title'        => $title.': '.$cabin[0].' '.$cabin[2],
+                        'title'        => '<div class="omniva_terminal_opt">'.$title.': '.$cabin[0].' '.$cabin[2].'</div>',
                         'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
                         'tax_class_id' => 0,
                         'text'         => ' '.$this->currency->format($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->session->data['currency'])
@@ -68,7 +72,7 @@ onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd 
 
                     $sub_quote['parcel_terminal_fake' .$cabin[3]] = array( 
                         'code'         => 'omnivalt.parcel_terminal_fake' . $cabin[3],
-                        'title'        => '<div id="parcel_terminal_fake' . $cabin[3].'"><script>$(\'#parcel_terminal_fake'.$cabin[3].'\').parent().parent().parent().hide().prev().hide();</script></div>',
+                        'title'        => '<div id="parcel_terminal_fake' . $cabin[3].'"class="omniva_terminal_opt"><script>$(\'#parcel_terminal_fake'.$cabin[3].'\').parent().parent().parent().hide().prev().hide();</script></div>',
                         'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),
                         'tax_class_id' => 0,
                         'text'         => 'fake' 
@@ -76,14 +80,24 @@ onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd 
 
             }
             $cabine_select .= '</select>';
+            $cabine_select .= '
+            <button type="button" id="show-omniva-map" class="omniva-btn"><i id="show-omniva-map" class="fa fa-map-marker-alt fa-lg" aria-hidden="true"></i></button>
+            ';
         }
         $code = "omnivalt";
         if ($service == "parcel_terminal")
           $code = 'fake';
 
+
+      if(isset($cabins))
+        $terminalOpt = $this->groupTerminals($cabins);
+      else
+        $terminalOpt = null;
+
         $quote_data[$service] = array(
           'code'         => $code.'.'.$service ,
           'title'        => $title.$cabine_select,
+          'terminals'    => $terminalOpt,
           'cost'         => $this->currency->convert($cost, $currency, $this->config->get('config_currency')),//$sum,
           'tax_class_id' => 0,
           'text'         => ' '.$this->currency->format($this->currency->convert($cost, $currency, $this->session->data['currency']), $this->session->data['currency'])
@@ -122,7 +136,7 @@ onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd 
       foreach ($grouped_options as $city=>$locs){
         $parcel_terminals .= '<optgroup label = "'.$city.'">';
         foreach ($locs as $key=>$loc){
-          $parcel_terminals .= '<option value = "omnivalt.parcel_terminal_'.$key.'" '.($key == $selected?'selected':'').'>'.$loc.'</option>';
+          $parcel_terminals .= '<option class="omnivaOption" value = "omnivalt.parcel_terminal_'.$key.'" '.($key == $selected?'selected':'').'>'.$loc.'</option>';
         }
         $parcel_terminals .= '</optgroup>';
       }
@@ -131,3 +145,4 @@ onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd 
     return $parcel_terminals;
   }
 }
+
