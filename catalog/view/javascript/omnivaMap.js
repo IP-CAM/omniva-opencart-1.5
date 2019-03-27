@@ -8,10 +8,6 @@ window.document.onclick = function(event) {
         /* document.querySelector('.found_terminals').innerHTML = omnivaSearch; */
     }
 }
-
-    
-    
-            //var locations = []//{$terminals_list};
             var select_terminal = select_terminals;
     
             function popTemplate(id, name, city, address, comment) {
@@ -112,9 +108,11 @@ window.document.onclick = function(event) {
       var map = new Map({
         basemap: "streets-navigation-vector"
       });
-    
+      var centerCoors = [23.96472, 54.999921];
+      if (stateForMap.includes('lv'))
+        centerCoors = [24.105078, 56.946285];
        view = new MapView({
-        center: [23.96472, 54.999921],
+        center: centerCoors,
         container: "map-omniva-terminals",
         map: map,
         zoom: 6
