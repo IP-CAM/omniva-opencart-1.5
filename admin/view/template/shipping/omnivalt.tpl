@@ -49,7 +49,7 @@
           <tr>
             <td><?php echo $entry_password; ?></td>
             <td>
-              <input type="text" name="omnivalt_password" value="<?php echo $omnivalt_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
+              <input type="password" name="omnivalt_password" value="<?php echo $omnivalt_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
               <?php if ($error_password) { ?>
               <div class="text-danger"><?php echo $error_password; ?></div>
               <?php } ?>
@@ -123,9 +123,7 @@
                 <?php } ?>
           </td>
       </tr>
-
-
-            <!-- Prices -->
+      <!-- Prices -->
       <tr>
             <td><?php echo $entry_parcel_terminal_price; ?></td>
             <td>
@@ -178,9 +176,7 @@
               <?php } ?>
             </td>
       </tr>
-<--/ Prices -->
-      
-      <tr>
+<--/ Prices --><tr>
             <td><?php echo $entry_company; ?></td>
             <td>
               <input type="text" name="omnivalt_company" value="<?php echo $omnivalt_company; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company" />
@@ -265,25 +261,17 @@
                     <td id="terminals">
                         <?php echo (isset($omnivalt_terminals['omnivalt_terminals_LT'])?count($omnivalt_terminals['omnivalt_terminals_LT']):0); ?>
       </tr>
-	  <tr>
-        <td>Cron url</td>
-            <td>
-                    <a href="<?php print HTTPS_CATALOG; ?>index.php?route=module/omnivalt"/><?php print HTTPS_CATALOG; ?>index.php?route=extension/module/omnivalt</a><br />
-                    Nuoroda galima naudoti automatiniam omnivalt terminalų atnaujinimui naudojant local serverio crontab funkcijas. 
-                    Arba jei tokios nėra - https://cron-job.org/en/ ir panašius servisus.
-                    
-	        </td>
-	  </tr>
-      <!-- Field for email templates -->
+         <!-- Field for email templates -->
             <tr>
               <td>
-                    Email templates<br />
-                    Enabled/Disabled 
+                    <?=$text_email_templates_head;?><br />
+                    <?= $text_enabled_disabled;?>
                     <input 
                     <?php if($omnivalt_enable_templates == 'on') print 'checked'; ?>
                     type="checkbox"
                     name="omnivalt_enable_templates">
-                    <br />(Email will be sent then first label is generated.)
+                    <br /><?=$text_email_templates;?>
+                    
                 </td>
                 <td>
                       <textarea 
@@ -294,7 +282,7 @@
                       </textarea>
                 </td>
             </tr>
-    <!--/ Field for email templates -->
+        <!--/ Field for email templates -->
         </form>
 
 </div>

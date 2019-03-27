@@ -12,7 +12,7 @@ window.document.onclick = function(event) {
     
     
             //var locations = []//{$terminals_list};
-            var select_terminal = 'Pasirinkti terminalą';
+            var select_terminal = select_terminals;
     
             function popTemplate(id, name, city, address, comment) {
                 return {
@@ -24,7 +24,7 @@ window.document.onclick = function(event) {
                 }
             }
     
-            var text_search_placeholder = "įveskite adresą";
+            var text_search_placeholder = "";
             var base_url = window.location.origin;
             var map, geocoder, markerAddress, opp = true;
             var image = base_url+'/system/storage/download/sasi.png';
@@ -213,7 +213,7 @@ window.document.onclick = function(event) {
                 })
             }
     
-            function findClosest(lat, lng) {console.log('[[FindClosest]]');
+            function findClosest(lat, lng) {
                 view.zoom = 12
                 view.center = [lng, lat];
                 filteredGRAF = view.graphics.map(function(graphic){

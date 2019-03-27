@@ -90,7 +90,7 @@ onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd 
 
 
       if(isset($cabins))
-        $terminalOpt = $this->groupTerminals($cabins);
+        $terminalOpt = $this->groupTerminals($cabins, $address['iso_code_2']);
       else
         $terminalOpt = null;
 

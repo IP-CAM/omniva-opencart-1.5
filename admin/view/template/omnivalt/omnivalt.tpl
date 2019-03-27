@@ -1,5 +1,4 @@
 <?php echo $header; ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-modal/2.2.6/js/bootstrap-modal.js"></script>
 
 <div id="content">
   <div class="breadcrumb">
@@ -220,15 +219,16 @@
 
 <div class="modal-body">
             <div class="">
-                    <strong>Svarbu!</strong> Vėliausias galimas kurjerio iškvietimas yra iki 15val. Vėliau iškvietus kurjerį negarantuojame, jog siunta bus paimta.
+                    <strong><?= $text_omniva_important; ?></strong> <?= $text_latest_courier_call;?>
                     <br />
-                    <strong>El-parduotuvės adreso nustatymus</strong>  galima keisti Omnivalt modulio nustatymuose.
+                    <strong><?= $text_eshop_settings;?></strong> <?= $text_eshop_settings_p;?>
             </div><hr>
-            <h4>Siunčiami duomenys</h4>
-            <b>Siuntėjas:</b> <?= $sender;?>,<br>
-            <b>Telefonas:</b> <?= $phone;?>,<br>
-            <b>Pašto kodas:</b> <?= $address;?>,<br>
-            <b>Adresas:</b> <?= $address;?>.<br>
+
+            <h4><?= $text_omniva_data_send;?><h4>
+            <b><?=$entry_sender_name;?>:</b> <?= $sender;?><br>
+            <b><?=$entry_sender_phone;?>:</b> <?= $phone;?><br>
+            <b><?=$entry_sender_postcode;?>:</b> <?= $postcode;?><br>
+            <b><?=$entry_sender_address;?>:</b> <?= $address;?><br>
             <hr><!--
                 <label class="control-label col-sm-3" for="email"> Tema (neprivaloma)</label>
                 
@@ -236,7 +236,7 @@
             <hr>-->
       </div>
       <div class="modal-footer">
-            <button type="submit"  id="requestOmnivaltQourier" class="btn btn-default"><?=$text_callCourier;?></button>
+            <button type="submit"  id="requestOmnivaltQourier" class="btn btn-default"><?=$button_save;?></button>
       </div>
     </form>
     </div>
@@ -332,18 +332,6 @@ $(document).ready(function() {
 	});
  });
 });
-
-url = location.href;
-sent = url.slice(-6, -2);
-urlGot = new URL(url);
-var page = urlGot.searchParams.get("page");
-//console.log(page);
-if (sent != 'undefined' || page != undefined) { 
-   if (sent == 'page' || page != undefined) { // sent is equal to yes
- 
-     $('[href="#tab-history"]').trigger('click');
-   }
-}
 </script>
 <?php
 echo $footer;
