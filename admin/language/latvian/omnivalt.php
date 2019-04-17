@@ -29,12 +29,12 @@ $_['entry_sort_order']                         = 'šķirošanas secība';
 $_['entry_parcel_terminal_price']              = 'Pakomāta pakalpojuma piegādes cena';
 $_['entry_courier_price']                      = 'Kurjerpakalpojuma piegādes cena';
 $_['entry_terminals']                          = 'Kopējais pakomātu skaits';
-$_['entry_sender_name']                        = 'Veikala nosaukums';
-$_['entry_sender_address']                     = 'Iela';
-$_['entry_sender_postcode']                    = 'Pasta indekss';
+$_['entry_sender_name']                        = 'Sūtītāja nosaukums';
+$_['entry_sender_address']                     = 'Sutītāja adrese';
+$_['entry_sender_postcode']                    = 'Sūtītāja pasta indekss';
 $_['entry_sender_country_code']                = 'Sūtītāja valsts kods (LT, LV, EE)';
-$_['entry_sender_city']                        = 'Pilsēta';
-$_['entry_sender_phone']                       = 'Kontakttālrunis';
+$_['entry_sender_city']                        = 'Sūtītāja pilsēta';
+$_['entry_sender_phone']                       = 'Sūtītāja tālruņa numurs';
 $_['cron_url']                                 = 'Cron url';
 // Error
 $_['error_permission']                         = 'Uzmanību: You do not have permission to modify Omnivalt shipping!';
@@ -47,12 +47,12 @@ $_['menu_head']             = 'Omniva';
 $_['menu_manifest']         = 'Pasūtījumi';
 $_['menu_settings']         = 'Iestatījumi';
 // orders
-$_['generate_labels']       = 'Drukāt adrešu karti';
+$_['generate_labels']       = 'Ģenerēt Omniva adrešu kartes';
 $_['print_manifest']        = 'Drukāt Omnivalv sūtījumu sarakstu';
 $_['labels_count']          = 'Adrešu karšu skaits';
 $_['weight']                = 'Svars';
 $_['cod_amount']            = 'C.O.D. Pēcapmaksas summa';
-$_['delivery_method']       = 'Piegādes vieta';
+$_['delivery_method']       = 'Piegādes veids';
 $_['renew']                 = 'Atjauninājums';
 ///Manifest
 $_['text_new_orders']       = 'Jauns';
@@ -86,7 +86,3 @@ $_['text_eshop_settings_p']    = 'var mainīt Omnivalt moduļa iestatījumos.';
 $_['text_omniva_data_send']    = 'Datu sūtīšana';
 $_['text_omniva_not_found']    = 'Nekas nav atrasts';
 
-$_['text_yes']                 = 'Jā';
-$_['text_no']                  = 'Ne';
-
-$_['text_manifestHead']        = 'Pasūtījumus';

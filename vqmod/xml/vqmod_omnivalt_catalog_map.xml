@@ -33,7 +33,7 @@
               $country = 'LV';
             else if (strpos($langs, 'ee') !== false)
                 $country = 'EE';
-
+$country = 'LV';
                     $terminals_json_file_dir = DIR_DOWNLOAD."/locations.json";
                     $terminals_file = fopen($terminals_json_file_dir, "r");
                     $terminals = fread($terminals_file,filesize($terminals_json_file_dir)+10);

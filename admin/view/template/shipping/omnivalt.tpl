@@ -14,7 +14,7 @@
       <div class="buttons">
       <a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a>
       <a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a>
-      <a onclick="$('#download').val('1');$('#form').submit();" class="button">Update terminals</i></a>
+      <a onclick="$('#download').val('1');$('#form').submit();" class="button"><?php echo $button_update_terminals;?></i></a>
 </div>
     </div>
  <?php if ($error_warning) { ?>

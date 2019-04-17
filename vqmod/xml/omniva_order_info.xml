@@ -14,7 +14,7 @@
             <search position="iafter" error="log"><![CDATA[<div class="vtabs">]]></search>
             <add><![CDATA[
                      <?php if (substr($shipping_code, 0, 8) == 'omnivalt') { ?>
-                     <a href="#tab-omniva">Omniva lipdukai</a>
+                     <a href="#tab-omniva">Omniva</a>
                      <?php } ?>
             ]]></add>
         </operation>
