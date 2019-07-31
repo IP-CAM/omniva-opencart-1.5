@@ -153,7 +153,7 @@ if ($this->request->post['labelsCount'] AND $this->request->post['order_id'] AND
 			$this->data['omnivalt_url'] = $this->config->get('omnivalt_url');
 		}
     if ($this->data['omnivalt_url'] == '') {
-      $this->data['omnivalt_url'] = 'https://217.159.234.93';
+      $this->data['omnivalt_url'] = 'https://edixml.post.ee';
     }
     
 		if (isset($this->request->post['omnivalt_user'])) {

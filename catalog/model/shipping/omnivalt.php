@@ -55,7 +55,8 @@ class ModelShippingOmnivalt extends Model {
           </script>
 <select name="omnivalt_parcel_terminal" id="omnivalt_parcel_terminal" class="form-control form-inline input-sm" style="width: 40%; display: inline;"
 onchange="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'td input\').val($(this).val()); $(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'td input\').prop(\'checked\',true);" 
-onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd input\').prop(\'checked\',true);">';
+onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd input\').prop(\'checked\',true);"
+>';
             usort($cabins,function($a,$b){ if ($a[1] ==  $b[1]) return ($a[0] < $b[0]) ? -1 : 1; return ($a[1] < $b[1]) ? -1 : 1; });
             $cabine_select .= $this->groupTerminals($cabins, $address['iso_code_2']);
 
@@ -81,7 +82,8 @@ onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd 
             }
             $cabine_select .= '</select>';
             $cabine_select .= '
-            <button type="button" id="show-omniva-map" class="omniva-btn"><i id="show-omniva-map" class="fa fa-map-marker-alt fa-lg" aria-hidden="true"></i></button>
+            <button type="button" id="show-omniva-map" class="btn btn-basic btn-sm omniva-btn" style = "display: none;">'.$this->language->get('Show parcel terminals map').' <img src = "{$module_url}sasi.png" title = "'.$this->language->get('Show parcel terminals map').'"/></button>
+            
             ';
         }
         $code = "omnivalt";

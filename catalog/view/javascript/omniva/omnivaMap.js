@@ -8,6 +8,10 @@ window.document.onclick = function(event) {
         /* document.querySelector('.found_terminals').innerHTML = omnivaSearch; */
     }
 }
+
+    
+    
+            //var locations = []//{$terminals_list};
             var select_terminal = select_terminals;
     
             function popTemplate(id, name, city, address, comment) {

@@ -11,7 +11,7 @@
                     $this->data['omnivalt_manifest'] = $this->url->link('shipping/omnivalt/manifest', 'token=' . $this->session->data['token'], true);
                     $this->load->language('shipping/omnivalt');
                     $this->data['omnivalt_manifests'] = $this->language->get('text_manifest');
-                    $this->data['omnivalt_labels'] = $this->language->get('generate_labels');
+                    $this->data['omnivalt_labels'] = $this->language->get('text_print_labels');
                 ]]></add>
         </operation>
         <operation>
@@ -19,7 +19,7 @@
                 <add><![CDATA[
                     $this->load->language('shipping/omnivalt');
                     $this->data['omnivalt_label'] = $this->url->link('shipping/omnivalt/labels', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);		    
-                    $this->data['omnivalt_labels'] = $this->language->get('generate_labels');
+                    $this->data['omnivalt_labels'] = $this->language->get('text_print_labels');
                 ]]></add>
         </operation>
         <operation>
@@ -27,7 +27,7 @@
                 <add><![CDATA[
                     $this->load->language('shipping/omnivalt');
                     $this->data['omnivalt_label']     = $this->url->link('shipping/omnivalt/labels', 'token=' . $this->session->data['token'] . '&order_id=' . (int)$this->request->get['order_id'], true);		    
-                    $this->data['omnivalt_labels']    = $this->language->get('generate_labels');
+                    $this->data['omnivalt_labels']    = 'Spausdinti lipdukus';
                     $this->data['labelsCount']        = $order_info['labelsCount'];
                     $this->data['omnivaWeight']       = $order_info['omnivaWeight'];
                     $this->data['cod_amount']         = $order_info['cod_amount'];

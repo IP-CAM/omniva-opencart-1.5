@@ -9,12 +9,27 @@
         <search><![CDATA[</head>]]></search>
             <add position="ibefore"><![CDATA[   
             <script>var locations = <?php echo json_encode($locations);?>;</script>
-            <script>var select_terminals = "<?= $select_om_teminal;?>"; var stateForMap = "<?= $stateForMap;?>";</script>
-            <link rel="stylesheet" href="https://js.arcgis.com/4.10/esri/css/main.css">
-            <script defer src="https://js.arcgis.com/4.10/"></script>
-            <link href="catalog/view/javascript/omnivacss.css" rel="stylesheet">
-            <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet">
-            <script defer src="catalog/view/javascript/omnivaMap.js" type="text/javascript"></script>
+            <script>var select_terminals = "<?= $select_om_teminal;?>";</script>
+            <link rel="stylesheet" type="text/css" href="catalog/view/javascript/omniva/leaflet.css" rel="stylesheet">
+            <script defer src="catalog/view/javascript/omniva/leaflet.js" type="text/javascript"></script>
+            <link rel="stylesheet" type="text/css"  href="catalog/view/javascript/omniva/omniva.css" rel="stylesheet" media = "screen">
+            <script defer src="catalog/view/javascript/omniva/omniva.js" type="text/javascript"></script>
+            <script>
+                var omnivadata = [];
+                omnivadata.text_select_terminal = '<?php echo $this->language->get('text_select_terminal'); ?>';
+                omnivadata.text_search_placeholder = '<?php echo $this->language->get('text_search_placeholder'); ?>';
+                omnivadata.not_found = '<?php echo $this->language->get('text_not_found'); ?>';
+                omnivadata.text_enter_address = '<?php echo $this->language->get('text_enter_address'); ?>';
+                omnivadata.text_show_in_map = '<?php echo $this->language->get('text_show_in_map'); ?>';
+                omnivadata.text_show_more = '<?php echo $this->language->get('text_show_more'); ?>' ;
+                omnivadata.omniva_plugin_url = window.location.origin+'/catalog/view/javascript/omniva/';
+                <?php 
+                $current_country = "LT";
+                if (isset($this->session->data['shipping_country_id']) && is_object($this->model_localisation_country) && isset($this->model_localisation_country->getCountry($this->session->data['shipping_country_id'])['iso_code_2'])){
+                $current_country = $this->model_localisation_country->getCountry($this->session->data['shipping_country_id'])['iso_code_2']; }
+                ?>
+                var omniva_current_country = '<?php echo $current_country; ?>';
+            </script>
         ]]></add>
     </operation>
     <operation>
@@ -33,7 +48,7 @@
               $country = 'LV';
             else if (strpos($langs, 'ee') !== false)
                 $country = 'EE';
-$country = 'LV';
+
                     $terminals_json_file_dir = DIR_DOWNLOAD."/locations.json";
                     $terminals_file = fopen($terminals_json_file_dir, "r");
                     $terminals = fread($terminals_file,filesize($terminals_json_file_dir)+10);
@@ -65,18 +80,28 @@ $country = 'LV';
                 return '
                 <div id="omnivaLtModal" class="modal">
                     <div class="omniva-modal-content">
-                        <div class="omniva-modal-header">
-                        <span class="close" id="terminalsModal">&times;</span>
-                        <h5 style="display: inline">'.$head.'</h5>
-                        </div>
-                        <div class="omniva-modal-body" style="/*overflow: hidden;*/">
-                            <div id="map-omniva-terminals">
+                            <div class="omniva-modal-header">
+                            <span class="close" id="terminalsModal">&times;</span>
+                            <h5 style="display: inline">'.$this->language->get('text_omniva_map_head').'</h5>
                             </div>
-                            <div class="omniva-search-bar" >
-                                <h3 style="margin-top: 0px;">'.$addresses.'</h3>
-                                <div id="omniva-search"></div>
-                                <div class="found_terminals scrollbar" id="style-8"></div>
-                            </div>
+                            <div class="omniva-modal-body" style="/*overflow: hidden;*/">
+                                <div id = "omnivaMapContainer"></div>
+                                <div class="omniva-search-bar" >
+                                    <h4 style="margin-top: 0px;">'.$this->language->get('text_parcel_terminal').'</h4>
+                                    <div id="omniva-search">
+                                    <form>
+                                    <input type = "text" placeholder = "'.$this->language->get('text_enter_address').'"/>
+                                    <button type = "submit" id="map-search-button"></button>
+                                    </form>                    
+                                    <div class="omniva-autocomplete scrollbar" style = "display:none;"><ul></ul></div>
+                                    </div>
+                                    <div class = "omniva-back-to-list" style = "display:none;">'.$this->language->get('text_back_to_list').'</div>
+                                    <div class="found_terminals scrollbar" id="style-8">
+                                      <ul>
+                                      
+                                      </ul>
+                                    </div>
+                                </div>
                         </div>
                     </div>
                 </div>';
@@ -91,7 +116,7 @@ $country = 'LV';
             $this->data['stateForMap'] = $this->session->data['language'];
             $this->data['locations']=$this->getTerminalForMap();
             $this->data['omnivaModal']=$this->terminalsModal();
-        ]]></add>
+       ]]></add>
     </operation>
   </file>
 </modification>

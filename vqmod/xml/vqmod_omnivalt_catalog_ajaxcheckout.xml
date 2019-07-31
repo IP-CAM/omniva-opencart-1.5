@@ -24,7 +24,7 @@
 			data-refresh="5" 
 			class="styled" style="display:nones"/> 
 
-			<span class="text">
+			<span class="text terminal-container">
 			<% $( "input[name=shipping_method]" ).focus(function() { $( this ).blur(); });%>
 				<select name="omnivalt_parcel_terminal" id="omnivalt_parcel_terminal" class="form-control form-inline input-sm" style="width: 70%; display: inline;"
 				onchange="$('#omnivalt_parcel_terminal').parent().parent().find('input').eq(0).prop('checked',true).val($(this).val());" 
@@ -34,8 +34,7 @@
 				    <option selected disabled><%= model.shipping_method.title %></option>                                        
 				<%  } %>
 				</select>
-            <button type="button" id="show-omniva-map" class="btn btn-basic btn-sm omniva-btn"><i id="show-omniva-map" class="fa fa-map-marker-alt fa-lg" aria-hidden="true"></i></button>
-			</span>
+            <button type="button" id="show-omniva-map" class="btn btn-basic btn-sm omniva-btn" style = "display: none;"><%= omnivadata.text_show_in_map %> <img src = "<%= omnivadata.omniva_plugin_url %>sasi.png" title = "<%= omnivadata.text_show_in_map %>"/></button></span>
 			<span class="price"> <%= quote.text %></span>
 		</label>
 	</div>
