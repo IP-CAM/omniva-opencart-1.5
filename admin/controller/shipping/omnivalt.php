@@ -11,8 +11,8 @@ class ControllerShippingOmnivalt extends Controller {
 public function install()
 {
  $sql = "ALTER TABLE ".DB_PREFIX."order ADD `labelsCount` INT NOT NULL DEFAULT '1',
-                                        ADD `omnivaWeight` INT NOT NULL DEFAULT '1',
-                                        ADD `cod_amount` INT DEFAULT 0;";
+                                        ADD `omnivaWeight` FLOAT NOT NULL DEFAULT '1',
+                                        ADD `cod_amount` FLOAT DEFAULT 0;";
 
  $this->db->query($sql);
 
