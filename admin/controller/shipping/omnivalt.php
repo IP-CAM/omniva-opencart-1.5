@@ -515,13 +515,6 @@ if ($this->request->post['labelsCount'] AND $this->request->post['order_id'] AND
                              <phone>'.$this->config->get('omnivalt_sender_phone').'</phone>
                              <address postcode="'.$this->config->get('omnivalt_sender_postcode').'" deliverypoint="'.$this->config->get('omnivalt_sender_city').'" country="'.$this->config->get('omnivalt_sender_country_code').'" street="'.$this->config->get('omnivalt_sender_address').'" />
                           </returnAddressee>
-                          <onloadAddressee>
-                             <person_name>'.$this->config->get('omnivalt_sender_name').'</person_name>
-                             <!--Optional:-->
-                             <phone>'.$this->config->get('omnivalt_sender_phone').'</phone>
-                             <address postcode="'.$this->config->get('omnivalt_sender_postcode').'" deliverypoint="'.$this->config->get('omnivalt_sender_city').'" country="'.$this->config->get('omnivalt_sender_country_code').'" street="'.$this->config->get('omnivalt_sender_address').'" />
-                            <pick_up_time start="'.date("c", strtotime($pickDay.' '.$pickStart)).'" finish="'.date("c", strtotime($pickDay.' '.$pickFinish)).'"/>
-                          </onloadAddressee>
                        </item>';
                        endfor;
                        $xmlRequest .= '
