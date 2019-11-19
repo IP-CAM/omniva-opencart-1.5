@@ -23,13 +23,12 @@ class ControllerModuleOmnivalt extends Controller {
                 $countries['LV'] = 2;
                 $countries['EE'] = 3;
                 $cabins = $this->parseCSV($csv,$countries);
-                if ($cabins) $terminals = $cabins;
-
-         $key = 'omnivalt_terminals_LT';
-         $this->db->query("UPDATE `" . DB_PREFIX . "setting` 
-         SET `value` = '" . $this->db->escape(serialize($terminals)) . "', serialized = '1' 
-         WHERE `key` = '" . $this->db->escape($key) . "'");
-         $this->csvTerminal();
+                if ($cabins) {
+                  $terminals = $cabins;
+                  $fp = fopen(DIR_DOWNLOAD."omniva_terminals.json", "w");
+                  fwrite($fp, json_encode($terminals));
+                  fclose($fp);
+                }
        }
 
        public function csvTerminal() {

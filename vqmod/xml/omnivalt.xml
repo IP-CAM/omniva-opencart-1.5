@@ -4,6 +4,25 @@
 	<vqmver><![CDATA[2.4.0]]></vqmver>
     <author><![CDATA[mijora]]></author>
     <file name="admin/controller/sale/order.php">
+        <operation error="skip">
+            <search><![CDATA[class ControllerSaleOrder extends Controller {]]></search>
+            <add position="after"><![CDATA[
+                private function loadOmnivaTerminals()
+                {
+                $terminals_json_file_dir = DIR_DOWNLOAD."omniva_terminals.json";
+                if (!file_exists($terminals_json_file_dir))
+                    return false;
+                $terminals_file = fopen($terminals_json_file_dir, "r");
+                if (!$terminals_file)
+                    return false;
+                $terminals = fread($terminals_file, filesize($terminals_json_file_dir) + 10);
+                fclose($terminals_file);
+                $terminals = json_decode($terminals, true);
+                return $terminals;
+                }
+                ]]>
+            </add>
+        </operation>
         <operation>
             <search position="ibefore" error="log"><![CDATA[$this->template = 'sale/order_list.tpl';]]></search>
                 <add><![CDATA[
@@ -31,7 +50,7 @@
                     $this->data['labelsCount']        = $order_info['labelsCount'];
                     $this->data['omnivaWeight']       = $order_info['omnivaWeight'];
                     $this->data['cod_amount']         = $order_info['cod_amount'];
-                    $this->data['omniva_terminals']   = $this->config->get('omnivalt_terminals_LT');
+                    $this->data['omniva_terminals']   = $this->loadOmnivaTerminals();
                     $this->data['shipping_code']      = $order_info['shipping_code'];
                     $this->data['editOmniva']         = $this->url->link('shipping/omnivalt/editLabel', 'token=' . $this->session->data['token'].  '&order_id=' . (int)$this->request->get['order_id'], true);
                     $this->data['order_id']           = $this->request->get['order_id'];
