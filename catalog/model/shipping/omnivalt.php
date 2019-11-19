@@ -4,7 +4,7 @@ class ModelShippingOmnivalt extends Model {
     $currency = "EUR";
     $total_kg = $this->cart->getWeight();
     $weight_class_id = $this->config->get('config_weight_class_id');
-    $unit = $this->db->query("SELECT unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE (weight_class_id = " . $weight_class_id . ") AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
+    $unit = $this->db->query("SELECT unit FROM `" . DB_PREFIX . "weight_class_description` wcd WHERE (weight_class_id = " . $weight_class_id . ") AND language_id = '" . (int)$this->config->get('config_language_id') . "'");
     $unit = $unit->row['unit'];
     if ($unit == 'g') {
         $total_kg /= 1000;
@@ -48,7 +48,7 @@ class ModelShippingOmnivalt extends Model {
         if ($cost === false)
           continue;
         $title = $this->language->get('text_'.$service);
-        if ($service == "parcel_terminal" && $cabins = $this->config->get('omnivalt_terminals_LT')){
+        if ($service == "parcel_terminal" && $cabins = $this->loadTerminals()){
           $cabine_select ='';
           $cabine_select .= '<script>$( "input[name=shipping_method]" ).focus(function() { $( this ).blur(); });
           $(".omniva_terminal_opt").parent().parent().hide();
@@ -123,7 +123,22 @@ onfocus="$(\'#omnivalt_parcel_terminal\').parent().parent().parent().find(\'tdd 
       );
     }
 		return $method_data;
-	}
+  }
+  
+  private function loadTerminals()
+  {
+    $terminals_json_file_dir = DIR_DOWNLOAD."omniva_terminals.json";
+    if (!file_exists($terminals_json_file_dir))
+      return false;
+    $terminals_file = fopen($terminals_json_file_dir, "r");
+    if (!$terminals_file)
+      return false;
+    $terminals = fread($terminals_file, filesize($terminals_json_file_dir) + 10);
+    fclose($terminals_file);
+    $terminals = json_decode($terminals, true);
+    return $terminals;
+  }
+
   private function groupTerminals($terminals,$country = 'LT', $selected = ''){
     $parcel_terminals = '';
     if (is_array($terminals)){

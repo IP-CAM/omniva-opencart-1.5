@@ -259,7 +259,7 @@
       <tr>
                     <td><?php echo $entry_terminals; ?></td>
                     <td id="terminals">
-                        <?php echo (isset($omnivalt_terminals['omnivalt_terminals_LT'])?count($omnivalt_terminals['omnivalt_terminals_LT']):0); ?>
+                        <?php echo (isset($omnivalt_terminals)?count($omnivalt_terminals):0); ?>
       </tr>
          <!-- Field for email templates -->
             <tr>
