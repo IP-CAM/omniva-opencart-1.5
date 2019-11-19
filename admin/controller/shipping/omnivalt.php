@@ -18,7 +18,15 @@ public function install()
 
    $this->load->model('setting/setting');
   
-  $sql2 = "CREATE TABLE `".DB_PREFIX."order_omniva` (id int NOT NULL AUTO_INCREMENT, tracking TEXT, manifest int, labels text, id_order int, PRIMARY KEY (id)) UNIQUE(id_order);" ;
+  $sql2 = "CREATE TABLE `".DB_PREFIX."order_omniva` (
+    id int NOT NULL AUTO_INCREMENT, 
+    tracking TEXT, 
+    manifest int, 
+    labels text, 
+    id_order int, 
+    PRIMARY KEY (id),
+    UNIQUE (id_order)
+  );" ;
 
   $this->model_setting_setting->editSetting('omniva', array('omniva_manifest' => 0));
   
