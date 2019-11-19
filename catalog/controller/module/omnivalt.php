@@ -26,7 +26,7 @@ class ControllerModuleOmnivalt extends Controller {
                 if ($cabins) $terminals = $cabins;
 
          $key = 'omnivalt_terminals_LT';
-         $this->db->query("UPDATE " . DB_PREFIX . "setting 
+         $this->db->query("UPDATE `" . DB_PREFIX . "setting` 
          SET `value` = '" . $this->db->escape(serialize($terminals)) . "', serialized = '1' 
          WHERE `key` = '" . $this->db->escape($key) . "'");
          $this->csvTerminal();
